@@ -3,193 +3,213 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Papillon — A butterfly that actually flies</title>
-<meta name="description" content="Papillon is a 70-gram ESP32-powered bionic butterfly that flies on two servos and a phone. One small print job stands between it and the air.">
+<title>Papillon 🦋 A butterfly that actually flies</title>
+<meta name="description" content="Papillon is a tiny flying butterfly I'm building — 70 grams, flapping wings, glowing at night. All it needs is one small print job.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Nunito:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
 <style>
-  :root { --ink:#171512; --paper:#fbf9f6; --orange:#d9480f; --grey:#6b6660; --line:#ddd8d0; }
+  :root {
+    --pink-bg:#fff5f7; --pink-soft:#ffe0ea; --pink:#f9a8c9; --rose:#e75480;
+    --rose-deep:#c2255c; --plum:#4a2436; --muted:#8a6d7d; --line:#f6cdd9; --white:#fff;
+  }
   * { box-sizing:border-box; margin:0; padding:0; }
-  body { font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif; background:var(--paper); color:var(--ink); line-height:1.6; }
-  header.hero { background:var(--ink); color:#fff; padding:4rem 1.25rem 3rem; }
-  header.hero .inner, main, footer { max-width:46rem; margin:0 auto; }
-  .kicker { color:var(--orange); font-size:.8rem; font-weight:700; letter-spacing:.22em; text-transform:uppercase; }
-  h1 { font-size:3rem; line-height:1.05; margin:.75rem 0 .5rem; }
-  .tagline { font-size:1.35rem; color:#f08a4b; }
-  .lede { color:#e8e2d8; margin-top:1.25rem; max-width:38rem; }
-  main { padding:2.5rem 1.25rem; }
-  section { margin-bottom:2.75rem; }
-  h2 { font-size:1.5rem; margin-bottom:.35rem; }
-  h2 .kicker { display:block; margin-bottom:.4rem; }
-  .sub { color:var(--grey); margin-bottom:1.25rem; }
-  .stats { display:grid; grid-template-columns:repeat(auto-fit,minmax(9rem,1fr)); gap:1.25rem; }
-  .stat { border-top:2px solid var(--orange); padding-top:.6rem; }
-  .stat b { display:block; font-size:1.8rem; color:#b33a0a; }
-  .stat span { font-weight:700; font-size:.95rem; }
-  .stat p { color:var(--grey); font-size:.9rem; }
-  figure { margin:1.25rem 0; }
-  figure img { width:100%; height:auto; display:block; }
-  figcaption { color:var(--grey); font-size:.85rem; margin-top:.4rem; }
-  table { width:100%; border-collapse:collapse; font-size:.95rem; }
-  th, td { text-align:left; padding:.55rem .25rem; border-bottom:1px solid var(--line); vertical-align:top; }
-  th { font-size:.8rem; letter-spacing:.08em; text-transform:uppercase; color:var(--grey); }
-  td.num, th.num { text-align:right; white-space:nowrap; }
-  td b { color:#b33a0a; }
-  .warn { background:#fdedE3; border-left:4px solid var(--orange); padding:.9rem 1rem; margin:1.25rem 0; }
-  .warn b { color:#7a2e0e; }
+  body { font-family:"Nunito",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+         background:var(--pink-bg); color:var(--plum); line-height:1.65; font-size:1.05rem; }
+  h1,h2,h3 { font-family:"Quicksand",system-ui,sans-serif; }
+  .wrap { max-width:40rem; margin:0 auto; padding:0 1.25rem; }
+
+  /* hero */
+  header.hero { background:linear-gradient(160deg,#ffd6e5 0%,#ffb3cc 55%,#ff9ebb 100%);
+                padding:3rem 0 2.5rem; text-align:center; border-bottom-left-radius:2rem; border-bottom-right-radius:2rem; }
+  header.hero .butterfly { font-size:3rem; }
+  header.hero h1 { font-size:3.2rem; line-height:1.05; color:var(--plum); margin:.25rem 0 .35rem; }
+  header.hero .tagline { font-size:1.3rem; font-weight:600; color:var(--rose-deep); }
+  header.hero p.lede { max-width:30rem; margin:1rem auto 0; color:#6b3a4f; }
+  header.hero .ask-chip { display:inline-block; margin-top:1.25rem; background:var(--white);
+    color:var(--rose-deep); font-weight:700; padding:.6rem 1.2rem; border-radius:999px;
+    box-shadow:0 4px 16px rgba(194,37,92,.18); }
+
+  main { padding:2rem 0 1rem; }
+  section { margin-bottom:2.5rem; }
+  h2 { font-size:1.45rem; margin-bottom:.5rem; }
+  h2 .emoji { margin-right:.35rem; }
+  .sub { color:var(--muted); margin-bottom:1rem; }
+
+  figure { margin:1rem 0; }
+  figure img { width:100%; height:auto; display:block; border-radius:1.25rem;
+               border:3px solid var(--white); box-shadow:0 8px 28px rgba(194,37,92,.16); }
+  figcaption { color:var(--muted); font-size:.85rem; margin-top:.5rem; text-align:center; }
+
+  .facts { display:flex; flex-wrap:wrap; gap:.6rem; margin:1rem 0; }
+  .fact { background:var(--white); border:1.5px solid var(--line); border-radius:999px;
+          padding:.45rem 1rem; font-weight:700; font-size:.95rem; color:var(--rose-deep); }
+  .fact span { color:var(--muted); font-weight:600; }
+
+  .card { background:var(--white); border-radius:1.25rem; padding:1.25rem 1.35rem;
+          box-shadow:0 6px 24px rgba(194,37,92,.10); margin:1rem 0; }
+  .card h3 { font-size:1.1rem; margin-bottom:.25rem; }
+  .card p { color:#6b3a4f; }
+  .card p b { color:var(--plum); }
+
+  .btn { display:block; text-align:center; background:var(--rose); color:#fff !important;
+         font-family:"Quicksand",sans-serif; font-weight:700; font-size:1.1rem;
+         padding:.9rem 1rem; border-radius:999px; text-decoration:none;
+         box-shadow:0 6px 20px rgba(231,84,128,.4); margin:1.25rem 0 .5rem; }
+  .btn:active { transform:scale(.98); }
+
+  .settings { list-style:none; }
+  .settings li { display:flex; justify-content:space-between; gap:1rem; padding:.6rem 0;
+                 border-bottom:1px solid var(--pink-soft); }
+  .settings li:last-child { border-bottom:none; }
+  .settings li b { color:var(--rose-deep); white-space:nowrap; }
+  .settings li span { color:var(--muted); font-size:.9rem; }
+
+  .note { background:#fff0f5; border:2px dashed var(--pink); border-radius:1.25rem;
+          padding:1rem 1.2rem; margin:1rem 0; }
+  .note b { color:var(--rose-deep); }
+
   ol.steps { list-style:none; counter-reset:step; }
-  ol.steps li { counter-increment:step; padding:.6rem 0 .6rem 2.5rem; position:relative; border-bottom:1px solid var(--line); }
-  ol.steps li::before { content:counter(step); position:absolute; left:0; top:.55rem; width:1.6rem; height:1.6rem; border-radius:50%; background:var(--orange); color:#fff; font-weight:700; font-size:.9rem; text-align:center; line-height:1.6rem; }
+  ol.steps li { counter-increment:step; position:relative; padding:.55rem 0 .55rem 2.6rem; }
+  ol.steps li::before { content:counter(step); position:absolute; left:0; top:.5rem;
+    width:1.7rem; height:1.7rem; border-radius:50%; background:var(--rose); color:#fff;
+    font-family:"Quicksand",sans-serif; font-weight:700; font-size:.95rem;
+    text-align:center; line-height:1.7rem; }
   ol.steps li b { display:block; }
-  ol.steps li p { color:var(--grey); font-size:.95rem; }
+  ol.steps li p { color:var(--muted); font-size:.95rem; }
+
   ul.links { list-style:none; }
-  ul.links li { padding:.7rem 0; border-bottom:1px solid var(--line); }
-  ul.links li b { display:block; }
-  ul.links li span { color:var(--grey); font-size:.9rem; }
-  a { color:#b33a0a; }
-  .ask { background:var(--ink); color:#fff; padding:2.5rem 1.25rem; text-align:left; }
-  .ask .inner { max-width:46rem; margin:0 auto; }
-  .ask h2 { font-size:1.8rem; }
-  .ask p { color:#e8e2d8; margin-top:.75rem; }
-  footer { padding:2rem 1.25rem 3rem; color:var(--grey); font-size:.85rem; }
+  ul.links li { padding:.7rem 0; border-bottom:1px solid var(--pink-soft); }
+  ul.links li:last-child { border-bottom:none; }
+  ul.links a { color:var(--rose-deep); font-weight:700; text-decoration:none; }
+  ul.links a:hover { text-decoration:underline; }
+  ul.links span { display:block; color:var(--muted); font-size:.9rem; }
+
+  .closing { background:linear-gradient(160deg,#ffb3cc,#ff8fab); border-radius:1.5rem;
+             padding:2rem 1.5rem; text-align:center; color:#fff; margin:2.5rem 0; }
+  .closing h2 { font-size:1.6rem; color:#fff; }
+  .closing p { margin-top:.75rem; color:#fff2f6; }
+  .closing .sig { font-weight:700; color:#fff; margin-top:1rem; }
+
+  footer { padding:0 0 3rem; color:var(--muted); font-size:.82rem; text-align:center; }
+  footer a { color:var(--rose-deep); }
 </style>
 </head>
 <body>
 
 <header class="hero">
-  <div class="inner">
-    <p class="kicker">A print request · From Hans</p>
+  <div class="wrap">
+    <div class="butterfly">🦋</div>
     <h1>Papillon</h1>
     <p class="tagline">A butterfly that actually flies.</p>
-    <p class="lede">An ESP32-powered, remote-controlled bionic butterfly — 70 grams, flapping wings, LED-lit for night flights. I am building one, and I need a small set of frame parts printed. This page is everything you need to print them.</p>
+    <p class="lede">I'm building a tiny flying butterfly, and I need one small favour. If you print its little frame, I'll do everything else — and then we'll watch it fly.</p>
+    <span class="ask-chip">💖 &nbsp;One print job. That's the whole ask.</span>
   </div>
 </header>
 
-<main>
+<main class="wrap">
 
   <section>
-    <h2><span class="kicker">The project</span>What I am building</h2>
-    <p class="sub">A servo-driven ornithopter — no propellers, just two flapping wings.</p>
-    <div class="stats">
-      <div class="stat"><b>70 g</b><span>all-up weight</span><p>Every gram counts. The frame must stay light.</p></div>
-      <div class="stat"><b>~5 min</b><span>flight per battery</span><p>Longest single flight so far: 1 min 9 s.</p></div>
-      <div class="stat"><b>25 m</b><span>range over Wi-Fi</span><p>Flown from a phone: join Butterfly_RC, open 192.168.4.1 — no app.</p></div>
-      <div class="stat"><b>4 Hz</b><span>flap rate, full throttle</span><p>Two SDS1601 servos, one per wing, steered by flapping harder on one side.</p></div>
+    <h2><span class="emoji">🦋</span>What is it?</h2>
+    <p>A little robot butterfly with real flapping wings — no propellers, just two wings beating like the real thing. It weighs less than a chocolate bar, it flies off your phone, and its wings light up at night.</p>
+    <div class="facts">
+      <div class="fact">70 g <span>· lighter than your phone</span></div>
+      <div class="fact">~5 min <span>· flying per charge</span></div>
+      <div class="fact">📱 <span>· steered from your phone</span></div>
+      <div class="fact">✨ <span>· wings glow in the dark</span></div>
     </div>
     <figure>
-      <img src="images/butterfly-bench.jpg" alt="The finished ESP-FLUTTER butterfly on the workbench, produce-bag wings with green LEDs">
-      <figcaption>The finished butterfly on the bench — produce-bag wings on carbon rods, ~50 LEDs, about 1 g per wing. Photo: Max Imagination.</figcaption>
+      <img src="images/butterfly-night.jpg" alt="The butterfly glowing pink at night on the workbench">
+      <figcaption>All lit up on the workbench. Photo: Max Imagination.</figcaption>
     </figure>
-    <p><b>Build:</b> two versions exist (modular perfboard, and a compact 4-layer PCB). I am building the PCB version.</p>
   </section>
 
   <section>
-    <h2><span class="kicker">The ask</span>What I need printed</h2>
-    <p class="sub">One small job on your Bambu Lab P2S — the frame. That is the whole ask.</p>
-    <table>
-      <tr><th>Part</th><th>Material</th><th>Notes</th></tr>
-      <tr><td><b>Frame parts</b></td><td>PETG</td><td>Body, servo mounts, brackets.</td></tr>
-      <tr><td><b>Guards &amp; hinges</b></td><td>TPU 95A</td><td>Flexible parts that protect the servos in a crash.</td></tr>
-      <tr><td><b>Total</b></td><td>—</td><td>30–60 g of plastic. Everything fits the P2S 256 mm bed with room to spare.</td></tr>
-    </table>
-    <p style="margin-top:1rem"><b>Files:</b> download the STL + STEP pack from Max's Cults3D page (link below). The full file list is on that page.</p>
-    <p><b>Not printed:</b> the wings are NOT printed — they are produce-bag film on carbon rods, which I make myself.</p>
+    <h2><span class="emoji">🖨️</span>The ask: print the frame</h2>
+    <p class="sub">The frame is the only part I can't make without a printer. It's small, light, and quick.</p>
+    <div class="card">
+      <h3>🩷 Hard bits — PETG</h3>
+      <p>The body, the little servo mounts, the brackets. Prints normally through the AMS.</p>
+    </div>
+    <div class="card">
+      <h3>💗 Bendy bits — soft TPU 95A</h3>
+      <p>Tiny flexible guards and hinges that protect the servos if it crashes. Just a few grams.</p>
+    </div>
+    <p>All together it's <b>30–60 grams of plastic</b> — everything fits your printer's bed easily. The wings aren't printed at all: I make those myself from a produce bag and carbon rods.</p>
+    <a class="btn" href="https://drive.google.com/drive/folders/1XTUW8Ez_hmZl5E6mPUDXgX2qnnI3Cp2e?usp=sharing">💾 &nbsp;Download the files (STL + STEP)</a>
+    <p style="text-align:center;color:var(--muted);font-size:.9rem">The files are also on Max's Cults3D page, linked from the video below.</p>
     <figure>
-      <img src="images/parts-layout.jpg" alt="All ESP-FLUTTER parts laid out on a cutting mat: carbon rods, servos, batteries, produce bag, and 3D-printed frame parts">
-      <figcaption>Every part of the build laid out — the printed frame pieces are on the right. Photo: Max Imagination.</figcaption>
+      <img src="images/butterfly-bench.jpg" alt="The finished butterfly resting on the workbench">
+      <figcaption>The finished butterfly, ready to fly. Photo: Max Imagination.</figcaption>
     </figure>
   </section>
 
   <section>
-    <h2><span class="kicker">Materials</span>Two spools — that is all</h2>
-    <p class="sub">The P2S ships with a PLA sample only. This build cannot use PLA.</p>
-    <table>
-      <tr><th>Spool</th><th>For</th><th>Cost</th></tr>
-      <tr><td><b>PETG</b></td><td>Frame — rigid, light, strong. Runs through the AMS 2 Pro normally.</td><td>~$25–30, a few dozen grams used</td></tr>
-      <tr><td><b>TPU 95A</b></td><td>Hinges &amp; guards — soft, bends thousands of times. See the catch below.</td><td>~$25–30, a few grams used</td></tr>
-    </table>
-    <div class="warn"><b>Do not substitute PLA for the TPU parts</b> — PLA hinges snap on the first flap. (Max's own warning.)</div>
-    <p>Total filament cost ~$55–60 for both spools; if you already own PETG + TPU 95A, the job costs a few dollars of filament.</p>
+    <h2><span class="emoji">🧵</span>What you'll need</h2>
+    <p>Just two spools. If you already have them, this costs a few dollars of plastic.</p>
+    <div class="card">
+      <h3>PETG · ~$25–30 a spool</h3>
+      <p>The frame. Only a few dozen grams get used.</p>
+    </div>
+    <div class="card">
+      <h3>TPU 95A · ~$25–30 a spool</h3>
+      <p>The bendy bits. Only a few grams get used.</p>
+    </div>
+    <div class="note">
+      <b>One thing to know:</b> the soft TPU can't go through the AMS — it bends too sharply in there and jams. Just feed it from the external spool holder instead. It's a short print, and it's the normal way to print soft TPU.
+    </div>
+    <p>And please don't swap the bendy bits to PLA — PLA hinges snap on the very first flap. (Max's own warning!)</p>
   </section>
 
   <section>
-    <h2><span class="kicker">The one catch</span>TPU 95A cannot go through the AMS</h2>
-    <p class="sub">Soft TPU 95A will not feed through the AMS 2 Pro. Print those parts separately.</p>
-    <table>
-      <tr><th>Parts</th><th>How</th></tr>
-      <tr><td><b>PETG parts</b></td><td>Load PETG in the AMS 2 Pro and print normally. This is the bulk of the job.</td></tr>
-      <tr><td><b>TPU parts</b></td><td>Feed TPU 95A from the external spool holder, bypassing the AMS. Only a handful of small, soft parts — a short print.</td></tr>
-    </table>
-    <p style="margin-top:1rem"><b>Why:</b> the AMS feed path bends soft filament too sharply — it jams instead of feeding. The external spool feeds it straight into the extruder, which handles TPU 95A fine. This is the standard P2S workflow for soft TPU.</p>
+    <h2><span class="emoji">⚙️</span>Print settings</h2>
+    <p class="sub">Straight from Max's own project file — just copy these in.</p>
+    <div class="card">
+      <ul class="settings">
+        <li><span>Layer height</span><b>0.16 mm</b></li>
+        <li><span>Walls</span><b>2 loops</b></li>
+        <li><span>Infill</span><b>15% rectilinear</b></li>
+        <li><span>Seam</span><b>Aligned</b></li>
+        <li><span>Supports</span><b>Off — none needed</b></li>
+        <li><span>Prime tower / flushing</span><b>Off</b></li>
+      </ul>
+    </div>
+    <p style="color:var(--muted);font-size:.9rem">Temperatures: your usual PETG / TPU 95A profiles are perfect.</p>
+    <figure>
+      <img src="images/parts-layout.jpg" alt="Every part of the butterfly laid out on a cutting mat">
+      <figcaption>Everything laid out — the printed frame pieces are on the right. Photo: Max Imagination.</figcaption>
+    </figure>
   </section>
 
   <section>
-    <h2><span class="kicker">Print settings</span>Use Max's own settings</h2>
-    <p class="sub">Straight from his Bambu Studio project — no guessing, no tuning.</p>
-    <table>
-      <tr><th>Setting</th><th>Value</th><th>Detail</th></tr>
-      <tr><td>Layer height</td><td><b>0.16 mm</b></td><td>First layer 0.2 mm</td></tr>
-      <tr><td>Walls</td><td><b>2 loops</b></td><td>Top 5 layers / 1 mm · Bottom 3 layers / 0.6 mm</td></tr>
-      <tr><td>Infill</td><td><b>15% rectilinear</b></td><td>Surface density 100%, monotonic</td></tr>
-      <tr><td>Seam</td><td><b>Aligned</b></td><td>Precise wall off · One wall on top surfaces on</td></tr>
-      <tr><td>Supports</td><td><b>OFF</b></td><td>None needed</td></tr>
-      <tr><td>Prime tower / flushing</td><td><b>OFF</b></td><td>Flush into support: on · Flush into infill: off</td></tr>
-    </table>
-    <p style="margin-top:1rem;color:var(--grey);font-size:.9rem">Source: “Print settings.jpg” in Max Imagination's project files (Google Drive). Material temperatures: use your usual PETG / TPU 95A profiles.</p>
-  </section>
-
-  <section>
-    <h2><span class="kicker">Division of labour</span>You print. I bring everything else.</h2>
-    <p class="sub">The frame is the only thing I cannot make without a printer.</p>
-    <table>
-      <tr><th>Part</th><th>What it is</th><th class="num">Cost</th></tr>
-      <tr><td>XIAO ESP32-C3</td><td>The brain — Wi-Fi, servos, LEDs</td><td class="num"><b>$4.90</b></td></tr>
-      <tr><td>2 × SDS1601 digital servos</td><td>High-speed coreless, one per wing</td><td class="num"><b>~$13</b></td></tr>
-      <tr><td>2S 220 mAh 45C LiPo</td><td>7.4 V, ~5 min flight</td><td class="num"><b>~$10</b></td></tr>
-      <tr><td>WS2812B LED strip</td><td>~50 LEDs along the wings</td><td class="num"><b>~$6</b></td></tr>
-      <tr><td>Flight-controller PCB</td><td>Custom 4-layer board, Gerbers in Drive</td><td class="num"><b>~$2</b></td></tr>
-      <tr><td>Carbon rods + produce-bag wings</td><td>Wing skeleton + film, cut and glued by me</td><td class="num"><b>~$0</b></td></tr>
-      <tr><td>2S balance charger + soldering kit</td><td>Charger is mandatory — never USB-charge a bare 2S LiPo</td><td class="num"><b>~$35</b></td></tr>
-      <tr><td><b>First build, all-in (my cost, not yours)</b></td><td>I also do the soldering, firmware flashing, assembly and test flights.</td><td class="num"><b>$98</b></td></tr>
-    </table>
-  </section>
-
-  <section>
-    <h2><span class="kicker">Timeline</span>From print to first flight</h2>
-    <p class="sub">Your part is quick — the whole print is a couple of hours at most.</p>
+    <h2><span class="emoji">✈️</span>Then what happens</h2>
     <ol class="steps">
-      <li><b>You print</b><p>PETG frame via AMS, TPU parts from the external spool. One short session.</p></li>
-      <li><b>I collect</b><p>I pick up the parts and check fit against the servos and PCB.</p></li>
-      <li><b>I assemble</b><p>Solder the XIAO + servos to the PCB, mount the frame, fit linkages.</p></li>
-      <li><b>Wings + LEDs</b><p>Carbon-rod wing frames, produce-bag film, LED strip along the edges.</p></li>
-      <li><b>First flight</b><p>Flash firmware, join Butterfly_RC from my phone, and fly it — indoors, calm air.</p></li>
+      <li><b>You print</b><p>One short session, whenever your printer is free. A weekend print is perfect.</p></li>
+      <li><b>I collect &amp; build</b><p>I pick up the parts, solder everything, and put it together. I bring all the electronics, the battery, and the wings.</p></li>
+      <li><b>It flies</b><p>We fly it together — indoors, calm air, phone in hand. 💖</p></li>
     </ol>
-    <p style="margin-top:1rem"><b>No deadline pressure</b> — whenever your printer is free. A weekend print is perfect.</p>
   </section>
 
   <section>
-    <h2><span class="kicker">Links &amp; files</span>Everything in one place</h2>
-    <p class="sub">All of Max's files are free for personal / hobby builds (PolyForm Noncommercial licence).</p>
+    <h2><span class="emoji">🔗</span>Everything in one place</h2>
     <ul class="links">
-      <li><b>3D files — STL + STEP (print these)</b><span>Cults3D — ESP-FLUTTER body parts by Max Imagination. Linked from the video description.</span></li>
-      <li><b>Project files — Gerbers, diagrams, wing templates</b><span><a href="https://drive.google.com/drive/folders/1XTUW8Ez_hmZl5E6mPUDXgX2qnnI3Cp2e?usp=sharing">Google Drive folder (Max Imagination)</a></span></li>
-      <li><b>Build tutorial — 52 min, step by step</b><span><a href="https://youtu.be/5Le4I-1Pf9I">YouTube — “Make an ESP32 RC Bionic Butterfly That Flies”</a></span></li>
-      <li><b>Firmware + flashing guide</b><span><a href="https://github.com/maximagination1/ESP-FLUTTER">github.com/maximagination1/ESP-FLUTTER</a></span></li>
-      <li><b>My build guide — BOM, steps, gotchas</b><span><a href="https://github.com/builtbysai/papillon">github.com/builtbysai/papillon</a></span></li>
+      <li><a href="https://youtu.be/5Le4I-1Pf9I">🎥 The build tutorial (52 min)</a><span>“Make an ESP32 RC Bionic Butterfly That Flies” — the video description has every link, including Cults3D.</span></li>
+      <li><a href="https://drive.google.com/drive/folders/1XTUW8Ez_hmZl5E6mPUDXgX2qnnI3Cp2e?usp=sharing">📁 Project files (Google Drive)</a><span>Gerbers, diagrams, wing templates — and the 3D files too.</span></li>
+      <li><a href="https://github.com/maximagination1/ESP-FLUTTER">💻 Firmware + flashing guide</a><span>Max's code, free for personal builds.</span></li>
+      <li><a href="https://github.com/builtbysai/papillon">📖 My build guide</a><span>Parts list, steps, and gotchas.</span></li>
     </ul>
   </section>
 
+  <div class="closing">
+    <h2>Print the frame, and a butterfly flies. 🦋</h2>
+    <p>Thank you — a 70-gram butterfly that flies on two servos and a phone is only possible because the frame exists, and the frame only exists if someone prints it.</p>
+    <p class="sig">— Hans · November 2026</p>
+  </div>
+
 </main>
 
-<div class="ask">
-  <div class="inner">
-    <p class="kicker">The ask, in one line</p>
-    <h2>Print the body-parts pack in PETG + TPU 95A. I will bring everything else.</h2>
-    <p>Thank you — a 70-gram butterfly that flies on two servos and a phone is only possible because the frame exists, and the frame only exists if someone prints it.</p>
-    <p>— Hans · November 2026</p>
-  </div>
-</div>
-
-<footer>
-  <p>Design by Max Imagination · Build guide by Hans · Photos: Max Imagination · Sources: Max Imagination's build video + project files; Hackster, Circuit Digest, TechEBlog coverage, Nov 2026.</p>
+<footer class="wrap">
+  <p>Design by <a href="https://youtu.be/5Le4I-1Pf9I">Max Imagination</a> · Photos: Max Imagination · Built with 💖 by Hans</p>
 </footer>
 
 </body>

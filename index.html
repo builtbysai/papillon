@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Papillon — A butterfly that actually flies</title>
+<meta name="description" content="Papillon is a 70-gram ESP32-powered bionic butterfly that flies on two servos and a phone. One small print job stands between it and the air.">
+<style>
+  :root { --ink:#171512; --paper:#fbf9f6; --orange:#d9480f; --grey:#6b6660; --line:#ddd8d0; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif; background:var(--paper); color:var(--ink); line-height:1.6; }
+  header.hero { background:var(--ink); color:#fff; padding:4rem 1.25rem 3rem; }
+  header.hero .inner, main, footer { max-width:46rem; margin:0 auto; }
+  .kicker { color:var(--orange); font-size:.8rem; font-weight:700; letter-spacing:.22em; text-transform:uppercase; }
+  h1 { font-size:3rem; line-height:1.05; margin:.75rem 0 .5rem; }
+  .tagline { font-size:1.35rem; color:#f08a4b; }
+  .lede { color:#e8e2d8; margin-top:1.25rem; max-width:38rem; }
+  main { padding:2.5rem 1.25rem; }
+  section { margin-bottom:2.75rem; }
+  h2 { font-size:1.5rem; margin-bottom:.35rem; }
+  h2 .kicker { display:block; margin-bottom:.4rem; }
+  .sub { color:var(--grey); margin-bottom:1.25rem; }
+  .stats { display:grid; grid-template-columns:repeat(auto-fit,minmax(9rem,1fr)); gap:1.25rem; }
+  .stat { border-top:2px solid var(--orange); padding-top:.6rem; }
+  .stat b { display:block; font-size:1.8rem; color:#b33a0a; }
+  .stat span { font-weight:700; font-size:.95rem; }
+  .stat p { color:var(--grey); font-size:.9rem; }
+  figure { margin:1.25rem 0; }
+  figure img { width:100%; height:auto; display:block; }
+  figcaption { color:var(--grey); font-size:.85rem; margin-top:.4rem; }
+  table { width:100%; border-collapse:collapse; font-size:.95rem; }
+  th, td { text-align:left; padding:.55rem .25rem; border-bottom:1px solid var(--line); vertical-align:top; }
+  th { font-size:.8rem; letter-spacing:.08em; text-transform:uppercase; color:var(--grey); }
+  td.num, th.num { text-align:right; white-space:nowrap; }
+  td b { color:#b33a0a; }
+  .warn { background:#fdedE3; border-left:4px solid var(--orange); padding:.9rem 1rem; margin:1.25rem 0; }
+  .warn b { color:#7a2e0e; }
+  ol.steps { list-style:none; counter-reset:step; }
+  ol.steps li { counter-increment:step; padding:.6rem 0 .6rem 2.5rem; position:relative; border-bottom:1px solid var(--line); }
+  ol.steps li::before { content:counter(step); position:absolute; left:0; top:.55rem; width:1.6rem; height:1.6rem; border-radius:50%; background:var(--orange); color:#fff; font-weight:700; font-size:.9rem; text-align:center; line-height:1.6rem; }
+  ol.steps li b { display:block; }
+  ol.steps li p { color:var(--grey); font-size:.95rem; }
+  ul.links { list-style:none; }
+  ul.links li { padding:.7rem 0; border-bottom:1px solid var(--line); }
+  ul.links li b { display:block; }
+  ul.links li span { color:var(--grey); font-size:.9rem; }
+  a { color:#b33a0a; }
+  .ask { background:var(--ink); color:#fff; padding:2.5rem 1.25rem; text-align:left; }
+  .ask .inner { max-width:46rem; margin:0 auto; }
+  .ask h2 { font-size:1.8rem; }
+  .ask p { color:#e8e2d8; margin-top:.75rem; }
+  footer { padding:2rem 1.25rem 3rem; color:var(--grey); font-size:.85rem; }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="inner">
+    <p class="kicker">A print request · From Hans</p>
+    <h1>Papillon</h1>
+    <p class="tagline">A butterfly that actually flies.</p>
+    <p class="lede">An ESP32-powered, remote-controlled bionic butterfly — 70 grams, flapping wings, LED-lit for night flights. I am building one, and I need a small set of frame parts printed. This page is everything you need to print them.</p>
+  </div>
+</header>
+
+<main>
+
+  <section>
+    <h2><span class="kicker">The project</span>What I am building</h2>
+    <p class="sub">A servo-driven ornithopter — no propellers, just two flapping wings.</p>
+    <div class="stats">
+      <div class="stat"><b>70 g</b><span>all-up weight</span><p>Every gram counts. The frame must stay light.</p></div>
+      <div class="stat"><b>~5 min</b><span>flight per battery</span><p>Longest single flight so far: 1 min 9 s.</p></div>
+      <div class="stat"><b>25 m</b><span>range over Wi-Fi</span><p>Flown from a phone: join Butterfly_RC, open 192.168.4.1 — no app.</p></div>
+      <div class="stat"><b>4 Hz</b><span>flap rate, full throttle</span><p>Two SDS1601 servos, one per wing, steered by flapping harder on one side.</p></div>
+    </div>
+    <figure>
+      <img src="images/butterfly-bench.jpg" alt="The finished ESP-FLUTTER butterfly on the workbench, produce-bag wings with green LEDs">
+      <figcaption>The finished butterfly on the bench — produce-bag wings on carbon rods, ~50 LEDs, about 1 g per wing. Photo: Max Imagination.</figcaption>
+    </figure>
+    <p><b>Build:</b> two versions exist (modular perfboard, and a compact 4-layer PCB). I am building the PCB version.</p>
+  </section>
+
+  <section>
+    <h2><span class="kicker">The ask</span>What I need printed</h2>
+    <p class="sub">One small job on your Bambu Lab P2S — the frame. That is the whole ask.</p>
+    <table>
+      <tr><th>Part</th><th>Material</th><th>Notes</th></tr>
+      <tr><td><b>Frame parts</b></td><td>PETG</td><td>Body, servo mounts, brackets.</td></tr>
+      <tr><td><b>Guards &amp; hinges</b></td><td>TPU 95A</td><td>Flexible parts that protect the servos in a crash.</td></tr>
+      <tr><td><b>Total</b></td><td>—</td><td>30–60 g of plastic. Everything fits the P2S 256 mm bed with room to spare.</td></tr>
+    </table>
+    <p style="margin-top:1rem"><b>Files:</b> download the STL + STEP pack from Max's Cults3D page (link below). The full file list is on that page.</p>
+    <p><b>Not printed:</b> the wings are NOT printed — they are produce-bag film on carbon rods, which I make myself.</p>
+    <figure>
+      <img src="images/parts-layout.jpg" alt="All ESP-FLUTTER parts laid out on a cutting mat: carbon rods, servos, batteries, produce bag, and 3D-printed frame parts">
+      <figcaption>Every part of the build laid out — the printed frame pieces are on the right. Photo: Max Imagination.</figcaption>
+    </figure>
+  </section>
+
+  <section>
+    <h2><span class="kicker">Materials</span>Two spools — that is all</h2>
+    <p class="sub">The P2S ships with a PLA sample only. This build cannot use PLA.</p>
+    <table>
+      <tr><th>Spool</th><th>For</th><th>Cost</th></tr>
+      <tr><td><b>PETG</b></td><td>Frame — rigid, light, strong. Runs through the AMS 2 Pro normally.</td><td>~$25–30, a few dozen grams used</td></tr>
+      <tr><td><b>TPU 95A</b></td><td>Hinges &amp; guards — soft, bends thousands of times. See the catch below.</td><td>~$25–30, a few grams used</td></tr>
+    </table>
+    <div class="warn"><b>Do not substitute PLA for the TPU parts</b> — PLA hinges snap on the first flap. (Max's own warning.)</div>
+    <p>Total filament cost ~$55–60 for both spools; if you already own PETG + TPU 95A, the job costs a few dollars of filament.</p>
+  </section>
+
+  <section>
+    <h2><span class="kicker">The one catch</span>TPU 95A cannot go through the AMS</h2>
+    <p class="sub">Soft TPU 95A will not feed through the AMS 2 Pro. Print those parts separately.</p>
+    <table>
+      <tr><th>Parts</th><th>How</th></tr>
+      <tr><td><b>PETG parts</b></td><td>Load PETG in the AMS 2 Pro and print normally. This is the bulk of the job.</td></tr>
+      <tr><td><b>TPU parts</b></td><td>Feed TPU 95A from the external spool holder, bypassing the AMS. Only a handful of small, soft parts — a short print.</td></tr>
+    </table>
+    <p style="margin-top:1rem"><b>Why:</b> the AMS feed path bends soft filament too sharply — it jams instead of feeding. The external spool feeds it straight into the extruder, which handles TPU 95A fine. This is the standard P2S workflow for soft TPU.</p>
+  </section>
+
+  <section>
+    <h2><span class="kicker">Print settings</span>Use Max's own settings</h2>
+    <p class="sub">Straight from his Bambu Studio project — no guessing, no tuning.</p>
+    <table>
+      <tr><th>Setting</th><th>Value</th><th>Detail</th></tr>
+      <tr><td>Layer height</td><td><b>0.16 mm</b></td><td>First layer 0.2 mm</td></tr>
+      <tr><td>Walls</td><td><b>2 loops</b></td><td>Top 5 layers / 1 mm · Bottom 3 layers / 0.6 mm</td></tr>
+      <tr><td>Infill</td><td><b>15% rectilinear</b></td><td>Surface density 100%, monotonic</td></tr>
+      <tr><td>Seam</td><td><b>Aligned</b></td><td>Precise wall off · One wall on top surfaces on</td></tr>
+      <tr><td>Supports</td><td><b>OFF</b></td><td>None needed</td></tr>
+      <tr><td>Prime tower / flushing</td><td><b>OFF</b></td><td>Flush into support: on · Flush into infill: off</td></tr>
+    </table>
+    <p style="margin-top:1rem;color:var(--grey);font-size:.9rem">Source: “Print settings.jpg” in Max Imagination's project files (Google Drive). Material temperatures: use your usual PETG / TPU 95A profiles.</p>
+  </section>
+
+  <section>
+    <h2><span class="kicker">Division of labour</span>You print. I bring everything else.</h2>
+    <p class="sub">The frame is the only thing I cannot make without a printer.</p>
+    <table>
+      <tr><th>Part</th><th>What it is</th><th class="num">Cost</th></tr>
+      <tr><td>XIAO ESP32-C3</td><td>The brain — Wi-Fi, servos, LEDs</td><td class="num"><b>$4.90</b></td></tr>
+      <tr><td>2 × SDS1601 digital servos</td><td>High-speed coreless, one per wing</td><td class="num"><b>~$13</b></td></tr>
+      <tr><td>2S 220 mAh 45C LiPo</td><td>7.4 V, ~5 min flight</td><td class="num"><b>~$10</b></td></tr>
+      <tr><td>WS2812B LED strip</td><td>~50 LEDs along the wings</td><td class="num"><b>~$6</b></td></tr>
+      <tr><td>Flight-controller PCB</td><td>Custom 4-layer board, Gerbers in Drive</td><td class="num"><b>~$2</b></td></tr>
+      <tr><td>Carbon rods + produce-bag wings</td><td>Wing skeleton + film, cut and glued by me</td><td class="num"><b>~$0</b></td></tr>
+      <tr><td>2S balance charger + soldering kit</td><td>Charger is mandatory — never USB-charge a bare 2S LiPo</td><td class="num"><b>~$35</b></td></tr>
+      <tr><td><b>First build, all-in (my cost, not yours)</b></td><td>I also do the soldering, firmware flashing, assembly and test flights.</td><td class="num"><b>$98</b></td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2><span class="kicker">Timeline</span>From print to first flight</h2>
+    <p class="sub">Your part is quick — the whole print is a couple of hours at most.</p>
+    <ol class="steps">
+      <li><b>You print</b><p>PETG frame via AMS, TPU parts from the external spool. One short session.</p></li>
+      <li><b>I collect</b><p>I pick up the parts and check fit against the servos and PCB.</p></li>
+      <li><b>I assemble</b><p>Solder the XIAO + servos to the PCB, mount the frame, fit linkages.</p></li>
+      <li><b>Wings + LEDs</b><p>Carbon-rod wing frames, produce-bag film, LED strip along the edges.</p></li>
+      <li><b>First flight</b><p>Flash firmware, join Butterfly_RC from my phone, and fly it — indoors, calm air.</p></li>
+    </ol>
+    <p style="margin-top:1rem"><b>No deadline pressure</b> — whenever your printer is free. A weekend print is perfect.</p>
+  </section>
+
+  <section>
+    <h2><span class="kicker">Links &amp; files</span>Everything in one place</h2>
+    <p class="sub">All of Max's files are free for personal / hobby builds (PolyForm Noncommercial licence).</p>
+    <ul class="links">
+      <li><b>3D files — STL + STEP (print these)</b><span>Cults3D — ESP-FLUTTER body parts by Max Imagination. Linked from the video description.</span></li>
+      <li><b>Project files — Gerbers, diagrams, wing templates</b><span><a href="https://drive.google.com/drive/folders/1XTUW8Ez_hmZl5E6mPUDXgX2qnnI3Cp2e?usp=sharing">Google Drive folder (Max Imagination)</a></span></li>
+      <li><b>Build tutorial — 52 min, step by step</b><span><a href="https://youtu.be/5Le4I-1Pf9I">YouTube — “Make an ESP32 RC Bionic Butterfly That Flies”</a></span></li>
+      <li><b>Firmware + flashing guide</b><span><a href="https://github.com/maximagination1/ESP-FLUTTER">github.com/maximagination1/ESP-FLUTTER</a></span></li>
+      <li><b>My build guide — BOM, steps, gotchas</b><span><a href="https://github.com/builtbysai/papillon">github.com/builtbysai/papillon</a></span></li>
+    </ul>
+  </section>
+
+</main>
+
+<div class="ask">
+  <div class="inner">
+    <p class="kicker">The ask, in one line</p>
+    <h2>Print the body-parts pack in PETG + TPU 95A. I will bring everything else.</h2>
+    <p>Thank you — a 70-gram butterfly that flies on two servos and a phone is only possible because the frame exists, and the frame only exists if someone prints it.</p>
+    <p>— Hans · November 2026</p>
+  </div>
+</div>
+
+<footer>
+  <p>Design by Max Imagination · Build guide by Hans · Photos: Max Imagination · Sources: Max Imagination's build video + project files; Hackster, Circuit Digest, TechEBlog coverage, Nov 2026.</p>
+</footer>
+
+</body>
+</html>
